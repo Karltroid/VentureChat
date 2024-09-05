@@ -22,7 +22,7 @@ public class Me extends Command {
 					if (args[x].length() > 0)
 						msg += " " + args[x];
 				if (sender instanceof Player && MineverseChatAPI.getOnlineMineverseChatPlayer((Player) sender).hasFilter()) {
-					msg = Format.FilterChat(msg);
+					msg = Format.FilterChat((Player) sender, msg);
 				}
 				if (sender.hasPermission("venturechat.color.legacy")) {
 					msg = Format.FormatStringLegacyColor(msg);

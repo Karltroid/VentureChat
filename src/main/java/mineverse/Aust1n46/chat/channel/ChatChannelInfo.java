@@ -6,7 +6,7 @@ public class ChatChannelInfo {
 	// DiscordSRV backwards compatibility
 	@Deprecated
 	public String FilterChat(String msg) {
-		return Format.FilterChat(msg);
+		return Format.FilterChat(null, msg);
 	}
 	
 	// DiscordSRV backwards compatibility

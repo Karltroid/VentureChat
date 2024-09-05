@@ -92,7 +92,7 @@ public class FormatTest {
 		String test = "I am an ass";
 		String expectedResult = "I am an donut";
 
-		String result = Format.FilterChat(test);
+		String result = Format.FilterChat(null, test);
 		assertEquals(expectedResult, result);
 	}
 
