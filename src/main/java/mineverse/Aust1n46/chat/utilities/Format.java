@@ -10,7 +10,6 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
-import net.essentialsx.api.v2.services.discord.DiscordService;
 import org.apache.commons.lang.StringUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -91,6 +90,9 @@ public class Format {
      *
      * @param s
      * @param format
+     * @param prefix
+     * @param nickname
+     * @param suffix
      * @param icp
      * @return {@link String}
      */
@@ -108,7 +110,7 @@ public class Format {
 				indexStart = matcher.start();
 				indexEnd = matcher.end();
 				placeholder = remaining.substring(indexStart, indexEnd);
-
+				
 				// Get the value of place holder then reprocess the formatted placeholder value to handle nested placeholders
 				formattedPlaceholder = escapeJsonChars(Format.FormatStringAll(PlaceholderAPI.setBracketPlaceholders(icp.getPlayer(), placeholder)));
 				while (PLACEHOLDERAPI_PLACEHOLDER_PATTERN.matcher(formattedPlaceholder).find()) {
@@ -733,43 +735,25 @@ public class Format {
 		return allFormated;
 	}
 
-	public static String FilterChat(Player player, String msg) {
-		// Original message to notify admins if necessary
-		String originalMsg = msg;
-
-		// Get the list of filters from the config
+	public static String FilterChat(String msg) {
+		int t = 0;
 		List<String> filters = getInstance().getConfig().getStringList("filters");
 		for (String s : filters) {
+			t = 0;
 			String[] pparse = new String[2];
 			pparse[0] = " ";
 			pparse[1] = " ";
 			StringTokenizer st = new StringTokenizer(s, ",");
-			int t = 0;
 			while (st.hasMoreTokens()) {
 				if (t < 2) {
 					pparse[t++] = st.nextToken();
 				}
 			}
-			// Case insensitive replacement
-			String newMsg = msg.replaceAll("(?i)" + pparse[0], pparse[1]);
-
-			// Check if the message has changed
-			if (Bukkit.getServer() != null && !msg.equals(newMsg) && !newMsg.equals("<3")) {
-				// Notify players with the VentureChat.alertFilters permission
-				for (Player onlinePlayer : Bukkit.getOnlinePlayers()) {
-					if (onlinePlayer.hasPermission("VentureChat.alertFilters")) {
-						onlinePlayer.sendMessage( ChatColor.RED + "" + ChatColor.BOLD + player.getName() + " Unfiltered: " + ChatColor.RED + originalMsg);
-					}
-				}
-			}
-
-			// Update the message
-			msg = newMsg;
+			// (?i) = case insensitive
+			msg = msg.replaceAll("(?i)" + pparse[0], pparse[1]);
 		}
-
 		return msg;
 	}
-
 
 	public static boolean isValidColor(String color) {
 		Boolean bFound = false;

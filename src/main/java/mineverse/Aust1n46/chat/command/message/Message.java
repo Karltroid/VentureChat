@@ -71,7 +71,7 @@ public class Message extends Command {
 					msg += " " + args[r];
 				}
 				if (mcp.hasFilter()) {
-					msg = Format.FilterChat(mcp.getPlayer(), msg);
+					msg = Format.FilterChat(msg);
 				}
 				if (mcp.getPlayer().hasPermission("venturechat.color.legacy")) {
 					msg = Format.FormatStringLegacyColor(msg);
@@ -170,7 +170,7 @@ public class Message extends Command {
 		}
 		String msg = msgBuilder.toString();
 		if (mcp.hasFilter()) {
-			msg = Format.FilterChat(mcp.getPlayer(), msg);
+			msg = Format.FilterChat(msg);
 		}
 		if (mcp.getPlayer().hasPermission("venturechat.color.legacy")) {
 			msg = Format.FormatStringLegacyColor(msg);

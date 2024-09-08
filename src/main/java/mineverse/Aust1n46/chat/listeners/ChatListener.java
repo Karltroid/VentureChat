@@ -110,7 +110,7 @@ public class ChatListener implements Listener {
 				String send = "";
 				String spy = "";
 				if(mcp.hasFilter()) {
-					filtered = Format.FilterChat(event.getPlayer(), filtered);
+					filtered = Format.FilterChat(filtered);
 				}
 				if(mcp.getPlayer().hasPermission("venturechat.color.legacy")) {
 					filtered = Format.FormatStringLegacyColor(filtered);
@@ -162,7 +162,7 @@ public class ChatListener implements Listener {
 					if((p.hasParty() && p.getParty().toString().equals(mcp.getParty().toString()) || p.isSpy())) {
 						String filtered = chat;
 						if(mcp.hasFilter()) {
-							filtered = Format.FilterChat(event.getPlayer(), filtered);
+							filtered = Format.FilterChat(filtered);
 						}
 						if(mcp.getPlayer().hasPermission("venturechat.color.legacy")) {
 							filtered = Format.FormatStringLegacyColor(filtered);
@@ -350,7 +350,7 @@ public class ChatListener implements Listener {
 		filterthis = eventChannel.isFiltered();
 		if(filterthis) {
 			if(mcp.hasFilter()) {
-				chat = Format.FilterChat(event.getPlayer(), chat);
+				chat = Format.FilterChat(chat);
 			}
 		}
 		PluginManager pluginManager = plugin.getServer().getPluginManager();
@@ -505,7 +505,6 @@ public class ChatListener implements Listener {
 		Set<Player> recipients = event.getRecipients();
 		int recipientCount = event.getRecipientCount();
 		String format = event.getFormat();
-		String unfilteredChat = event.getChat();
 		String chat = event.getChat();
 		String consoleChat = event.getConsoleChat();
 		String globalJSON = event.getGlobalJSON();
